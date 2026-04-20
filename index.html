@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#0a0908" />
+<title>The Real Guru — Ask. Breathe. Receive.</title>
+<meta name="description" content="Real gurus don't charge money. Ask your question. Get truth, not performance." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --bg: #0a0908;
+    --bg-2: #14110f;
+    --ink: #f4f1ea;
+    --ink-dim: #a8a29a;
+    --ink-faint: #554f47;
+    --gold: #c9a961;
+    --gold-soft: #8a7547;
+    --line: #2a2622;
+    --radius: 18px;
+    --max: 680px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    font-weight:300;
+    line-height:1.55;
+    min-height:100dvh;
+    background:
+      radial-gradient(ellipse at top, #181410 0%, var(--bg) 55%),
+      var(--bg);
+    padding:max(24px,env(safe-area-inset-top)) 20px max(48px,env(safe-area-inset-bottom));
+    overflow-x:hidden;
+  }
+  .wrap{max-width:var(--max);margin:0 auto}
+  h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif;font-weight:400;letter-spacing:-0.01em}
+  .hairline{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:48px 0}
+
+  /* HEADER */
+  header{display:flex;justify-content:space-between;align-items:center;padding:4px 0 60px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:15px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-dim)}
+  .logo .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 16px var(--gold)}
+  .pill{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-faint);padding:6px 12px;border:1px solid var(--line);border-radius:999px}
+
+  /* HERO */
+  .hero{padding:28px 0 8px;text-align:left}
+  .kicker{color:var(--gold);font-size:12px;letter-spacing:0.32em;text-transform:uppercase;margin-bottom:22px;font-weight:500}
+  .hero h1{
+    font-size:clamp(44px,9vw,72px);
+    line-height:0.98;
+    font-weight:300;
+    margin-bottom:26px;
+    letter-spacing:-0.025em;
+  }
+  .hero h1 em{font-style:italic;color:var(--gold);font-weight:300}
+  .hero p{color:var(--ink-dim);font-size:clamp(15px,2.4vw,17px);max-width:520px}
+  .tagline{margin-top:34px;font-family:'Fraunces',serif;font-style:italic;color:var(--ink-dim);font-size:14px;letter-spacing:0.02em}
+  .tagline::before{content:"— "}
+
+  /* MODE TOGGLE */
+  .modes{
+    display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:44px 0 18px;
+    padding:6px;background:var(--bg-2);border:1px solid var(--line);border-radius:14px;
+  }
+  .mode{
+    appearance:none;border:0;background:transparent;color:var(--ink-dim);
+    font-family:inherit;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;
+    padding:12px 6px;border-radius:10px;cursor:pointer;font-weight:500;
+    transition:all .25s ease;
+  }
+  .mode small{display:block;font-size:9px;font-weight:400;letter-spacing:0.16em;color:var(--ink-faint);margin-top:3px;text-transform:uppercase}
+  .mode[aria-pressed="true"]{background:#1f1a15;color:var(--ink);box-shadow:inset 0 0 0 1px var(--gold-soft)}
+  .mode[aria-pressed="true"] small{color:var(--gold)}
+
+  /* INPUT */
+  .ask-label{color:var(--ink-dim);font-size:13px;letter-spacing:0.04em;margin:8px 0 14px}
+  .ask{
+    position:relative;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px 20px 16px;transition:border-color .3s;
+  }
+  .ask:focus-within{border-color:var(--gold-soft)}
+  textarea{
+    width:100%;background:transparent;color:var(--ink);border:0;outline:0;resize:none;
+    font-family:'Fraunces',Georgia,serif;font-size:22px;line-height:1.35;font-weight:300;
+    min-height:96px;letter-spacing:-0.005em;
+  }
+  textarea::placeholder{color:var(--ink-faint);font-style:italic}
+  .ask-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:12px}
+  .examples{display:flex;gap:6px;flex-wrap:wrap;flex:1;min-width:0}
+  .chip{
+    font-size:11px;color:var(--ink-dim);background:#1a1714;border:1px solid var(--line);
+    padding:6px 10px;border-radius:999px;cursor:pointer;white-space:nowrap;font-family:inherit;
+    transition:all .2s;
+  }
+  .chip:hover{color:var(--ink);border-color:var(--gold-soft)}
+
+  .reveal{
+    appearance:none;border:0;cursor:pointer;
+    background:var(--ink);color:var(--bg);
+    font-family:'Fraunces',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;
+    padding:14px 20px;border-radius:999px;font-weight:500;white-space:nowrap;
+    transition:transform .2s ease, background .2s;
+  }
+  .reveal:hover{transform:translateY(-1px)}
+  .reveal:disabled{opacity:0.5;cursor:wait}
+  .reveal:disabled::after{content:" …"}
+
+  /* RESPONSE CARD */
+  .response-wrap{margin-top:36px;min-height:10px}
+  .card{
+    background:linear-gradient(180deg,#15110e,#0e0c0a);
+    border:1px solid var(--line);border-radius:22px;
+    padding:32px 26px;
+    opacity:0;transform:translateY(12px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .card.show{opacity:1;transform:none}
+  .card .meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-faint)}
+  .card .meta .pattern{color:var(--gold)}
+  .block{margin:22px 0}
+  .block h3{
+    font-family:'Inter',sans-serif;font-weight:500;font-size:11px;letter-spacing:0.2em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:10px;
+  }
+  .block p{font-family:'Fraunces',serif;font-weight:300;font-size:19px;line-height:1.45;color:var(--ink);letter-spacing:-0.005em}
+  .block.truth p{font-size:17px;color:var(--ink)}
+  .block.action p{font-size:16px;color:var(--ink-dim);font-family:'Inter',sans-serif;font-style:italic}
+  .quote{
+    margin-top:30px;padding:26px 22px;border-radius:16px;
+    background:#09070600;border:1px dashed var(--gold-soft);
+    text-align:center;
+  }
+  .quote p{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:20px;line-height:1.4;color:var(--ink);letter-spacing:-0.01em}
+  .quote::before{content:"❝";display:block;color:var(--gold);font-size:26px;margin-bottom:6px;line-height:1}
+
+  .card-actions{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+  .btn-ghost{
+    appearance:none;background:transparent;color:var(--ink);border:1px solid var(--line);
+    font-family:inherit;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;
+    padding:11px 16px;border-radius:999px;cursor:pointer;font-weight:500;flex:1;min-width:120px;
+    transition:border-color .2s,color .2s;
+  }
+  .btn-ghost:hover{border-color:var(--gold-soft);color:var(--gold)}
+
+  /* SILENT MODE */
+  .card.silent .block p{font-family:'Fraunces',serif;font-size:22px;letter-spacing:0.02em}
+  .card.silent .block.action p{font-size:16px}
+
+  /* CRISIS */
+  .card.crisis{border-color:#3d2b1f;background:linear-gradient(180deg,#1a0f0a,#0e0806)}
+  .card.crisis .meta .pattern{color:#e6b17e}
+  .card.crisis .block p{font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;color:var(--ink)}
+  .card.crisis .block h3{color:#e6b17e}
+
+  /* DAILY TRUTH */
+  .daily{
+    margin-top:80px;padding:34px 26px;border:1px solid var(--line);border-radius:22px;
+    background:linear-gradient(180deg,#0e0c0a,#0a0908);text-align:center;
+  }
+  .daily .kicker{margin-bottom:14px;text-align:center}
+  .daily p{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:22px;line-height:1.4;color:var(--ink);letter-spacing:-0.005em}
+  .daily .day{font-size:11px;color:var(--ink-faint);letter-spacing:0.16em;text-transform:uppercase;margin-top:18px}
+
+  /* MANIFESTO */
+  .manifesto{margin-top:80px;text-align:center;color:var(--ink-dim);font-family:'Fraunces',serif;font-style:italic;font-size:15px;line-height:1.7;max-width:440px;margin-inline:auto}
+  .manifesto span{color:var(--gold);font-style:normal;letter-spacing:0.04em;display:block;font-size:11px;text-transform:uppercase;margin-bottom:14px;font-family:'Inter',sans-serif}
+
+  /* FOOTER */
+  footer{margin-top:80px;padding-top:28px;border-top:1px solid var(--line);text-align:center;color:var(--ink-faint);font-size:11px;letter-spacing:0.12em;text-transform:uppercase}
+  footer a{color:var(--ink-dim);text-decoration:none}
+
+  /* TOAST */
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:13px;font-weight:500;opacity:0;pointer-events:none;transition:all .3s ease;z-index:50;letter-spacing:0.02em}
+  .toast.show{opacity:1;transform:translateX(-50%)}
+
+  @media (max-width:520px){
+    body{padding:max(16px,env(safe-area-inset-top)) 16px max(40px,env(safe-area-inset-bottom))}
+    .mode{font-size:11px;padding:11px 4px}
+    .mode small{font-size:8px}
+    textarea{font-size:20px}
+    .block p{font-size:18px}
+  }
+
+  /* hidden offscreen canvas */
+  #shareCanvas{position:absolute;left:-9999px;top:-9999px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <div class="logo"><span class="dot"></span>The Real Guru</div>
+    <div class="pill">v1 · demo</div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="kicker">Real gurus don't charge money</div>
+    <h1>Ask. Breathe. <em>Receive.</em></h1>
+    <p>Ask your question. Get truth, not performance. No course. No funnel. No fake enlightenment.</p>
+    <div class="tagline">for the honest parts of you that no one else speaks to</div>
+  </section>
+
+  <div class="hairline"></div>
+
+  <!-- MODES -->
+  <div class="modes" role="tablist" aria-label="Answer style">
+    <button class="mode" data-mode="gentle" aria-pressed="false" role="tab">Gentle<small>hold me</small></button>
+    <button class="mode" data-mode="real" aria-pressed="true" role="tab">Real<small>tell me</small></button>
+    <button class="mode" data-mode="silent" aria-pressed="false" role="tab">Silent<small>show me</small></button>
+  </div>
+
+  <!-- ASK -->
+  <div class="ask-label">What is weighing on you right now?</div>
+  <div class="ask">
+    <textarea id="question" rows="3" placeholder="Say it plainly. No one is watching."></textarea>
+    <div class="ask-footer">
+      <div class="examples" id="examples"></div>
+      <button class="reveal" id="reveal">Reveal</button>
+    </div>
+  </div>
+
+  <!-- RESPONSE -->
+  <section class="response-wrap" id="responseWrap"></section>
+
+  <!-- DAILY TRUTH -->
+  <section class="daily" id="dailyBlock">
+    <div class="kicker">Daily truth</div>
+    <p id="dailyText">The real guru inside you has been whispering. You just wanted a louder voice.</p>
+    <div class="day" id="dailyDay"></div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <div class="manifesto">
+    <span>Manifesto</span>
+    Peace begins where performance ends. No course. No funnel. No fake enlightenment. Just truth.
+  </div>
+
+  <footer>
+    Free. Ad-free. Forever. · <a href="#" id="about">about</a>
+  </footer>
+
+</div>
+
+<div class="toast" id="toast">Copied</div>
+<canvas id="shareCanvas" width="1080" height="1350"></canvas>
+
+<script>
+/* ---------------------------------------------------------------
+   THE REAL GURU — demo response engine
+   Pattern-based lookup using the prompt kit taxonomy.
+   Swap `generateDemo()` with `generateFromAPI()` to go live.
+---------------------------------------------------------------- */
+
+/* 1. EGO DETECTOR — keyword heuristics */
+const PATTERNS = {
+  CRISIS:              ['kill myself','kill me','end it all','want to die','suicide','suicidal','cut myself','hurt myself','self harm','self-harm','he hits me','she hits me','beat me','disappear forever'],
+  VALIDATION_ADDICTION:['validation','do they like me','am i good enough','followers','no one sees','they didn\'t reply','they didnt reply','likes','approval','need them to see'],
+  CONTROL:             ['make them','get them to','force','i need them to','if only they would','strategy','plan to make'],
+  AVOIDANCE:           ['i feel lost','i\'m lost','im lost','i don\'t know','dont know','i dont know','it\'s complicated','its complicated','confused','maybe later','procrastin'],
+  ATTACHMENT:          ['can\'t lose','cant lose','without them','need them back','don\'t leave','dont leave','what if they leave','hold on to'],
+  RESENTMENT:          ['revenge','unfair','they did this','can\'t forgive','cant forgive','they owe','betrayed','hate them'],
+  COMPARISON:          ['everyone else','falling behind','behind in life','they have it all','why am i behind','comparing'],
+  PERFORMANCE:         ['should be further','thought i had healed','expected to','i\'m the strong','im the strong','people expect'],
+  GRIEF:               ['i lost','they died','passed away','she\'s gone','hes gone','she is gone','he is gone','miss them','miss him','miss her','since they left','since he','since she'],
+  FEAR:                ['scared of','afraid of','what if','terrified','anxious about','i might fail','panic'],
+  LONELINESS:          ['i\'m alone','im alone','nobody understands','no one gets me','have no one','so lonely'],
+  SHAME:               ['i\'m broken','im broken','something\'s wrong with me','somethings wrong with me','hate myself','i\'m bad','im bad','worthless'],
+  DISTRACTION:         ['keep scrolling','can\'t focus','cant focus','waste time','numb myself','binge'],
+  CONFUSION:           ['can\'t decide','cant decide','torn between','should i','what should i do'],
+  ENVY:                ['don\'t deserve it','dont deserve it','why them','can\'t stand seeing','cant stand seeing']
+};
+
+function detectPattern(text){
+  const t = text.toLowerCase();
+  if (PATTERNS.CRISIS.some(k => t.includes(k))) return {primary:'CRISIS', secondary:null};
+  const hits = [];
+  for (const [name,kws] of Object.entries(PATTERNS)){
+    if (name === 'CRISIS') continue;
+    const score = kws.reduce((s,k) => s + (t.includes(k) ? 1 : 0), 0);
+    if (score) hits.push({name, score});
+  }
+  hits.sort((a,b) => b.score - a.score);
+  if (hits.length === 0) return {primary:'CONFUSION', secondary:null};
+  return {primary: hits[0].name, secondary: hits[1]?.name || null};
+}
+
+/* 2. RESPONSE BANK — pattern × mode */
+const RESPONSES = {
+  AVOIDANCE: {
+    real: {
+      mirror:"You are not lost. You are refusing to admit you already know the next move, and you do not want to make it.",
+      truth:"Confusion is often the ego buying time from a truth that will cost it something.",
+      action:"Write one sentence on paper: \"The thing I am pretending not to know is ___.\" Finish it now.",
+      quote:"You are not confused. You are negotiating with a truth you already feel."
+    },
+    gentle: {
+      mirror:"You are not lost. You are between identities, and the silence in between feels like absence.",
+      truth:"What you call lostness is often the quiet before your next truth arrives — only if you do not rush the in-between.",
+      action:"Sit for two minutes. No music. No phone. Let the silence speak first.",
+      quote:"Lostness is not a wrong turn. It is the space between who you were and who you are becoming."
+    },
+    silent: {
+      mirror:"Not lost. Stalling.",
+      truth:"You know. You delay.",
+      action:"Write the sentence you are avoiding. One line. Now.",
+      quote:"The map was never missing."
+    }
+  },
+  RESENTMENT: {
+    real: {
+      mirror:"You do not want revenge. You want to stop feeling powerless inside the memory of what happened.",
+      truth:"Revenge is grief wearing armor. It keeps the wound fresh because the wound is the last thing still tying you to them.",
+      action:"Close your eyes. Name the feeling under the anger in one word. Out loud.",
+      quote:"Revenge is just grief that refuses to sit down."
+    },
+    gentle: {
+      mirror:"You are not cruel. You are carrying a hurt that has not been witnessed by the one who caused it, and the silence is unbearable.",
+      truth:"Anger is often love with nowhere to go. The question is not how to punish them, but where your love is now meant to live.",
+      action:"Put your hand where the anger lives in your body. Breathe into that place ten times.",
+      quote:"What you cannot punish, you are finally free to put down."
+    },
+    silent: {
+      mirror:"Not anger. Grief.",
+      truth:"The wound is louder than the wounder.",
+      action:"Name the softer feeling. One word.",
+      quote:"Revenge is grief in a mask."
+    }
+  },
+  VALIDATION_ADDICTION: {
+    real: {
+      mirror:"You are not asking why. You are hoping the question itself will dissolve the ache of needing it.",
+      truth:"Validation hunger is what happens when a young version of you learned that love was a transaction. It is not a flaw. It is an old contract that can be rewritten now.",
+      action:"Place a hand on your chest. Say out loud: \"I see you. I am not leaving.\" Stay there for ten seconds.",
+      quote:"You are not addicted to validation. You are loyal to the first version of love you were given."
+    },
+    gentle: {
+      mirror:"You are not weak for wanting to be seen. You are human, and a part of you was once invisible for too long.",
+      truth:"The need for validation fades not when you conquer it, but when you finally become the one who notices yourself.",
+      action:"Look in a mirror. Say your own name softly. Watch the face that belongs to you.",
+      quote:"The one you were waiting to be seen by was always you."
+    },
+    silent: {
+      mirror:"Not needy. Unwitnessed.",
+      truth:"You wait for eyes you already have.",
+      action:"Close your eyes. See yourself.",
+      quote:"The witness was always inside."
+    }
+  },
+  FEAR: {
+    real: {
+      mirror:"You are not scared of failing. You are attached to a specific version of succeeding and pretending that is the same thing.",
+      truth:"Fear grows when the mind is asked to protect an outcome instead of a person.",
+      action:"Exhale for twice as long as you inhale. Five breaths. Nothing else.",
+      quote:"Fear is a plan. Not a prophecy."
+    },
+    gentle: {
+      mirror:"You are not weak for being afraid. You are standing close to something that matters to you, and the heart always trembles before what it loves.",
+      truth:"Fear is often care that has not yet found its courage.",
+      action:"Place your palm on your belly. Breathe slow enough to feel it rise. Three times.",
+      quote:"Fear is love still looking for its footing."
+    },
+    silent: {
+      mirror:"Not scared. Attached.",
+      truth:"Fear is love of an outcome.",
+      action:"Exhale longer than you inhale. Five times.",
+      quote:"Fear is a plan, not a prophecy."
+    }
+  },
+  GRIEF: {
+    real: {
+      mirror:"You are not stuck. You are grieving, and grief does not care about your timeline.",
+      truth:"Grief is love that no longer has a body to give itself to. It does not heal. It reshapes.",
+      action:"Say their name out loud once. Then put one hand over your heart and breathe.",
+      quote:"Grief is not something you get through. It is something you get bigger than."
+    },
+    gentle: {
+      mirror:"You are not broken. You are someone who loved well enough to still ache.",
+      truth:"Missing someone is love refusing to be silent about what mattered.",
+      action:"Light something — a candle, a match, a lamp. Let the small flame be a witness with you.",
+      quote:"Grief is love keeping its promise."
+    },
+    silent: {
+      mirror:"Love. Still speaking.",
+      truth:"The ache is the proof.",
+      action:"Say their name once. Then breathe.",
+      quote:"Grief is love without an address."
+    }
+  },
+  DISTRACTION: {
+    real: {
+      mirror:"You do not hate yourself for scrolling. You hate that the scrolling is working — it is doing exactly what you asked it to do: hide you from something.",
+      truth:"Distraction is a correct response to a signal you are not yet ready to read.",
+      action:"Put the phone face-down in another room. Sit with the discomfort for 90 seconds. Notice what it is actually asking for.",
+      quote:"Your distraction is a message. Read it before you silence it again."
+    },
+    gentle: {
+      mirror:"You are not lazy. You are tired of holding something you have not yet been allowed to set down.",
+      truth:"The body does not numb without a reason. Listen before you fix.",
+      action:"Place both hands flat on your thighs. Feel the weight. Breathe three slow breaths.",
+      quote:"Numbing is a plea for rest the world would not grant you."
+    },
+    silent: {
+      mirror:"Not lazy. Hiding.",
+      truth:"Scrolling is a question you will not ask.",
+      action:"Phone in another room. Ninety seconds. Sit.",
+      quote:"Every scroll is a sentence unfinished."
+    }
+  },
+  ATTACHMENT: {
+    real: {
+      mirror:"You are not afraid of losing them. You are afraid of meeting the part of you that exists without them.",
+      truth:"Attachment mistakes the fear of your own aloneness for the depth of your love.",
+      action:"Write one sentence: \"Without them, I would still be ___.\" Fill it in.",
+      quote:"You do not miss them. You miss the version of you that was witnessed by them."
+    },
+    gentle: {
+      mirror:"You are not too much for needing them. You are someone who learned how to love, and love leaves marks.",
+      truth:"Letting go is not abandoning love. It is trusting that it does not need holding to stay real.",
+      action:"Press your hand on your heart. Say: \"I can love you and still be whole.\"",
+      quote:"Love does not live in grip. It lives in room."
+    },
+    silent: {
+      mirror:"Not love. Grip.",
+      truth:"You fear your own aloneness.",
+      action:"Open your hand. Literally.",
+      quote:"Love unclenches."
+    }
+  },
+  LONELINESS: {
+    real: {
+      mirror:"You are not alone because no one is around. You are alone because the one person who could meet you there is someone you have been avoiding: yourself.",
+      truth:"Loneliness is disconnection from the self, dressed up as disconnection from others.",
+      action:"Sit with yourself like you would with a friend you have not seen in a year. Ask the question out loud: \"How are you, really?\"",
+      quote:"The loneliness you feel is the door back to yourself."
+    },
+    gentle: {
+      mirror:"You are not unloved. You are waiting to be recognized, and the waiting is the loneliest part.",
+      truth:"Being seen begins with being seen by you. The rest follows.",
+      action:"Look at your hands. They have carried you here. Thank them softly.",
+      quote:"You are not lonely. You are between recognitions."
+    },
+    silent: {
+      mirror:"Not alone. Unmet.",
+      truth:"You left before anyone could.",
+      action:"Come back. Ask: how are you, really?",
+      quote:"Return is the first company."
+    }
+  },
+  CONFUSION: {
+    real: {
+      mirror:"You are not torn. You already know. You are waiting for permission that is not coming.",
+      truth:"Most confusion is a delay strategy against a choice that will require you to disappoint someone.",
+      action:"Ask yourself: who am I trying not to disappoint with this answer? Say their name out loud.",
+      quote:"Confusion is often a stalling tactic with good posture."
+    },
+    gentle: {
+      mirror:"You are not indecisive. You are standing at a threshold, and both paths ask something real of you.",
+      truth:"Not every choice needs a clean answer. Some need only a next small step taken honestly.",
+      action:"Put your hand on your chest. Ask quietly: what does the smaller next step look like?",
+      quote:"Clarity arrives after the first honest step, not before."
+    },
+    silent: {
+      mirror:"Not torn. Delaying.",
+      truth:"You know. You wait for permission.",
+      action:"Name who you fear disappointing.",
+      quote:"Permission was never the path."
+    }
+  },
+  COMPARISON: {
+    real: {
+      mirror:"You are not behind. You are measuring your backstage against everyone else's highlight reel and punishing yourself for the gap.",
+      truth:"Comparison is the art of misreading another person's middle as your ending.",
+      action:"Close the app you were comparing in. Write one thing only you could have done with your specific life.",
+      quote:"You are not late. You are on a path the crowd cannot see."
+    },
+    gentle: {
+      mirror:"You are not failing. You are in the season no one photographs, and it is the most important one.",
+      truth:"Growth has quiet chapters. They look nothing like the ones the world rewards.",
+      action:"Name one small thing you did this week that only you know about. Let it count.",
+      quote:"The quiet chapters are where the real becoming happens."
+    },
+    silent: {
+      mirror:"Not behind. Comparing.",
+      truth:"Their middle is not your end.",
+      action:"Close the app. Breathe.",
+      quote:"The crowd walks a different road."
+    }
+  },
+  PERFORMANCE: {
+    real: {
+      mirror:"You are not unhealed. You are tired of performing the version of you that everyone celebrated for being okay.",
+      truth:"Healing is not a finish line. Pretending it is one is the fastest way to need it again.",
+      action:"Say out loud: \"I am allowed to not be the strong one today.\" Then sit with what loosens.",
+      quote:"If you are performing enlightenment, you are still asleep."
+    },
+    gentle: {
+      mirror:"You are not a fraud. You are a human who learned to be useful before you were allowed to be tired.",
+      truth:"Rest is not failure. It is the ground where your realness is allowed to return.",
+      action:"Lie down for three minutes. Do nothing. Let the weight set itself down.",
+      quote:"You are allowed to not be further along."
+    },
+    silent: {
+      mirror:"Not healed. Performing.",
+      truth:"The costume is heavy.",
+      action:"Take it off. Sit.",
+      quote:"Rest is the original honesty."
+    }
+  },
+  SHAME: {
+    real: {
+      mirror:"You are not broken. You are someone who once had to believe they were the problem in order to survive a situation that was not safe.",
+      truth:"Shame is old protection pretending to be truth.",
+      action:"Place both hands on your face gently. Say out loud: \"I am not the thing that happened.\"",
+      quote:"You were not born wrong. You were taught to believe you were."
+    },
+    gentle: {
+      mirror:"You are not bad. You are someone carrying a story that was never yours to hold.",
+      truth:"The voice that shames you is not your voice. It is an echo. You can learn to speak back to it.",
+      action:"Write down one sentence the shame keeps saying. Then write: \"Who taught me this?\" Leave it.",
+      quote:"You were never the problem. You were the one who stayed."
+    },
+    silent: {
+      mirror:"Not bad. Burdened.",
+      truth:"Shame is borrowed.",
+      action:"Put the story down.",
+      quote:"You are not what they made you carry."
+    }
+  },
+  CONTROL: {
+    real: {
+      mirror:"You do not want to fix them. You want to stop feeling the vulnerability of not being in control of the outcome.",
+      truth:"Control is fear with better grammar.",
+      action:"Open your fists. Literally. Notice what you had been holding.",
+      quote:"You were never steering. You were gripping."
+    },
+    gentle: {
+      mirror:"You are not controlling. You are trying to protect something that matters, and the heart gets tight when it is scared.",
+      truth:"Trust is not passivity. It is a discipline of letting the river be a river.",
+      action:"Uncurl your hands. Place them open on your lap. Breathe.",
+      quote:"Some things are not yours to hold. Only yours to walk beside."
+    },
+    silent: {
+      mirror:"Not control. Fear.",
+      truth:"You grip what you cannot hold.",
+      action:"Open your hands.",
+      quote:"Control is fear with a plan."
+    }
+  },
+  ENVY: {
+    real: {
+      mirror:"You are not a bad person for envying them. You are looking at a mirror of a life you have not yet allowed yourself to want out loud.",
+      truth:"Envy is precise. It points exactly at the version of you that has been waiting.",
+      action:"Finish this sentence on paper: \"What I actually want is ___.\" Do not edit it.",
+      quote:"Envy is a compass. Not a curse."
+    },
+    gentle: {
+      mirror:"You are not cruel. You are hungry, and you have been told for too long that wanting is a flaw.",
+      truth:"The feeling is not telling you they are wrong. It is telling you what is still unlived in you.",
+      action:"Write down what you actually want. One sentence. No justifications.",
+      quote:"Envy is the shape of an unlived life."
+    },
+    silent: {
+      mirror:"Not envy. Signal.",
+      truth:"It points at you.",
+      action:"Name what you want.",
+      quote:"Envy is a map."
+    }
+  }
+};
+
+/* Fallback if pattern not in bank */
+const FALLBACK = {
+  real:  { mirror:"You already know what the question is really asking. You want someone to say it out loud so you do not have to.", truth:"Clarity is not withheld. It is postponed by the one asking.", action:"Say the question out loud. Then say the answer you already suspect. Just once.", quote:"The question is loud because the answer is near." },
+  gentle:{ mirror:"You brought something honest here. That alone is the first movement of the answer.", truth:"Not every question needs a solution. Some only need a witness before they dissolve.", action:"Put a hand on your chest. Say: \"I hear you.\" Mean it for ten seconds.", quote:"Being heard by yourself is the first medicine." },
+  silent:{ mirror:"Something knows.", truth:"You are closer than you think.", action:"Breathe. Listen once.", quote:"The answer is already near." }
+};
+
+/* Crisis response — off-persona, warm, resource-linked */
+const CRISIS_RESPONSE = {
+  mirror:"What you are carrying right now is too heavy to carry alone — and you do not have to. Please reach out to a person who can be with you in this: a trusted friend, family member, or a crisis line. In the US, call or text 988. In the UK, call 116 123 (Samaritans). Elsewhere: findahelpline.com. If you are in immediate danger, please call your local emergency number.",
+  truth:"",
+  action:"",
+  quote:"You matter. Staying matters. The weight is real, and so is the help."
+};
+
+/* 50 Daily Truths (same as prompt kit §5) */
+const DAILY_TRUTHS = [
+  "You don't need more motivation. You need less self-deception.",
+  "Peace begins where performance ends.",
+  "Attachment speaks louder than love.",
+  "The wound is not your enemy. The lie around it is.",
+  "Stop decorating your fear with philosophy.",
+  "You are not lost. You are avoiding the map you already have.",
+  "Clarity is not given. It is uncovered by putting the phone down.",
+  "The ego is a brilliant translator. It mistranslates pain as identity.",
+  "You don't want closure. You want to be right.",
+  "If it needs an audience, it is not transformation. It is theater.",
+  "The loudest mind is the one most afraid of silence.",
+  "Your distraction is a message. Read it.",
+  "Forgiveness is the exit door you forgot you built.",
+  "You are not too much. You are unwitnessed.",
+  "Rest is not a reward. It is the ground your life grows from.",
+  "If you are performing enlightenment, you are still asleep.",
+  "Comparison is the art of misreading another person's middle as your ending.",
+  "What you resist, you rehearse.",
+  "Your boundaries are the shape of your self-respect.",
+  "The breath you are holding is the one telling you the truth.",
+  "Not every thought deserves a throne.",
+  "The body knew before the mind admitted.",
+  "You don't have a discipline problem. You have a lying-to-yourself problem.",
+  "Love without honesty is a hostage negotiation.",
+  "Revenge is just grief wearing armor.",
+  "The past keeps its grip only where you keep its script.",
+  "Courage is the quiet refusal to abandon yourself.",
+  "Your silence is sometimes your highest integrity.",
+  "Stop asking for permission to be who you already are.",
+  "Waiting is not peace. It is decorated fear.",
+  "Wanting to be understood is not the same as being ready to be seen.",
+  "If you must explain yourself constantly, you are with the wrong people.",
+  "You are not healing. You are negotiating a truce with yourself.",
+  "What you tolerate, you teach.",
+  "The mind is a great servant and a terrible master.",
+  "Every lie needs maintenance. Every truth needs only room.",
+  "You are not behind. You are on a path the crowd cannot see.",
+  "If it demands your anxiety as fuel, it is not your purpose.",
+  "Overthinking is the ego rehearsing for a stage that does not exist.",
+  "Real trust has no receipts.",
+  "The person you keep becoming is more honest than the one you defend.",
+  "Not every door that opens is for you.",
+  "Silence is the first teacher. The only one who never lies.",
+  "What you will not name, you will repeat.",
+  "The hardest prayer is: let me not need to be special.",
+  "If your peace depends on their behavior, you are still in their cage.",
+  "Love that survives honesty is the only love worth keeping.",
+  "You were never meant to be easy to digest.",
+  "Stop interviewing your pain. Sit with it.",
+  "The real guru inside you has been whispering. You just wanted a louder voice."
+];
+
+const EXAMPLES = [
+  "I feel lost.",
+  "I want revenge.",
+  "Why do I need validation?",
+  "I'm scared of failing.",
+  "I miss them.",
+  "I keep scrolling for hours."
+];
+
+/* ---------- DEMO GENERATOR ---------- */
+function generateDemo(question, mode){
+  const {primary, secondary} = detectPattern(question);
+  if (primary === 'CRISIS'){
+    return { ...CRISIS_RESPONSE, detected_pattern:'CRISIS', secondary_pattern:null, mode:'gentle', safety_route:'crisis' };
+  }
+  const bank = RESPONSES[primary] || null;
+  const content = (bank && bank[mode]) || FALLBACK[mode];
+  return { ...content, detected_pattern:primary, secondary_pattern:secondary, mode, safety_route:'none' };
+}
+
+/* ---------- LIVE API ----------
+   When deployed to Vercel with /api/guru wired up, this hits the real LLM.
+   When opened as a local file (file://) or when /api/guru is unreachable,
+   it transparently falls back to the pattern-based demo generator.
+----------------------------------- */
+const API_AVAILABLE = typeof location !== 'undefined' && /^https?:$/.test(location.protocol);
+
+async function callGuru(question, mode){
+  if (!API_AVAILABLE) return { data: generateDemo(question, mode), source: 'demo' };
+  try {
+    const r = await fetch('/api/guru', {
+      method:'POST',
+      headers:{'content-type':'application/json'},
+      body: JSON.stringify({question, mode})
+    });
+    if (r.status === 429){
+      const body = await r.json().catch(() => ({}));
+      toast(`Breathe. Try again in ${body.retry_after || 30}s.`);
+      return { data: generateDemo(question, mode), source: 'demo' };
+    }
+    if (!r.ok) throw new Error('api ' + r.status);
+    const data = await r.json();
+    if (!data || typeof data.mirror !== 'string') throw new Error('bad shape');
+    return { data, source: 'api' };
+  } catch (e){
+    // 404 in local dev / network hiccup / server down — use the offline voice.
+    return { data: generateDemo(question, mode), source: 'demo' };
+  }
+}
+
+/* ---------- UI ---------- */
+const $ = (sel) => document.querySelector(sel);
+const $$ = (sel) => document.querySelectorAll(sel);
+
+let currentMode = 'real';
+let lastResponse = null;
+
+function setMode(m){
+  currentMode = m;
+  $$('.mode').forEach(btn => btn.setAttribute('aria-pressed', btn.dataset.mode === m ? 'true' : 'false'));
+}
+$$('.mode').forEach(btn => btn.addEventListener('click', () => setMode(btn.dataset.mode)));
+
+/* Example chips */
+const exWrap = $('#examples');
+EXAMPLES.sort(() => Math.random()-0.5).slice(0,3).forEach(ex => {
+  const b = document.createElement('button');
+  b.className = 'chip';
+  b.type = 'button';
+  b.textContent = ex;
+  b.addEventListener('click', () => { $('#question').value = ex; $('#question').focus(); });
+  exWrap.appendChild(b);
+});
+
+/* Daily truth */
+(function initDaily(){
+  const now = new Date();
+  const start = new Date(now.getFullYear(),0,0);
+  const dayOfYear = Math.floor((now - start) / 86400000);
+  const t = DAILY_TRUTHS[dayOfYear % DAILY_TRUTHS.length];
+  $('#dailyText').textContent = t;
+  $('#dailyDay').textContent = now.toLocaleDateString(undefined,{weekday:'long', month:'long', day:'numeric'});
+})();
+
+/* Reveal */
+$('#reveal').addEventListener('click', onReveal);
+$('#question').addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') onReveal();
+});
+
+async function onReveal(){
+  const q = $('#question').value.trim();
+  if (!q) { $('#question').focus(); return; }
+
+  const btn = $('#reveal');
+  btn.disabled = true;
+  btn.textContent = 'Revealing';
+
+  // Short intentional pause — the "breathe" moment of the flow
+  const pause = new Promise(r => setTimeout(r, 600));
+  const fetchP = callGuru(q, currentMode);
+
+  const [{ data: res, source }] = await Promise.all([fetchP, pause]);
+
+  renderResponse(res);
+  lastResponse = res;
+
+  // Subtle indicator in dev: you can see which path served the answer.
+  if (source === 'demo' && API_AVAILABLE) console.info('[guru] served from local demo (API unreachable)');
+
+  btn.disabled = false;
+  btn.textContent = 'Reveal';
+}
+
+function patternLabel(p){
+  if (!p) return '';
+  return p.replace(/_/g,' ').toLowerCase();
+}
+
+function renderResponse(r){
+  const wrap = $('#responseWrap');
+  const isCrisis = r.safety_route === 'crisis';
+  const modeClass = isCrisis ? 'crisis' : r.mode;
+
+  wrap.innerHTML = `
+    <article class="card ${modeClass}" id="card">
+      <div class="meta">
+        <span>${isCrisis ? 'A softer voice' : (r.mode + ' guru')}</span>
+        <span class="pattern">${patternLabel(r.detected_pattern)}${r.secondary_pattern ? ' · '+patternLabel(r.secondary_pattern) : ''}</span>
+      </div>
+      <div class="block mirror">
+        <h3>${isCrisis ? 'Please read' : 'Mirror'}</h3>
+        <p>${escapeHTML(r.mirror)}</p>
+      </div>
+      ${r.truth ? `<div class="block truth"><h3>Deep truth</h3><p>${escapeHTML(r.truth)}</p></div>` : ''}
+      ${r.action ? `<div class="block action"><h3>Simple action</h3><p>${escapeHTML(r.action)}</p></div>` : ''}
+      ${r.quote ? `<div class="quote"><p>${escapeHTML(r.quote)}</p></div>` : ''}
+      <div class="card-actions">
+        <button class="btn-ghost" id="askDeeper">Ask deeper</button>
+        <button class="btn-ghost" id="another">Another truth</button>
+        <button class="btn-ghost" id="copyQuote">Copy quote</button>
+        <button class="btn-ghost" id="shareCard">Share card</button>
+      </div>
+    </article>
+  `;
+
+  requestAnimationFrame(() => $('#card').classList.add('show'));
+  $('#card').scrollIntoView({behavior:'smooth', block:'start'});
+
+  $('#askDeeper').addEventListener('click', () => {
+    $('#question').focus();
+    $('#question').scrollIntoView({behavior:'smooth', block:'center'});
+  });
+  $('#another').addEventListener('click', onReveal);
+  $('#copyQuote').addEventListener('click', () => {
+    if (!r.quote) return;
+    navigator.clipboard?.writeText(r.quote);
+    toast('Quote copied');
+  });
+  $('#shareCard').addEventListener('click', () => shareCard(r));
+}
+
+function escapeHTML(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1600);
+}
+
+/* ---------- SHARE CARD (canvas → PNG) ---------- */
+function shareCard(r){
+  const canvas = $('#shareCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  // Background
+  const g = ctx.createRadialGradient(W/2, H*0.25, 40, W/2, H/2, H*0.9);
+  g.addColorStop(0, '#1a1510');
+  g.addColorStop(0.6, '#0a0908');
+  g.addColorStop(1, '#050403');
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+
+  // Decorative gold dot
+  ctx.fillStyle = '#c9a961';
+  ctx.beginPath(); ctx.arc(W/2, 140, 6, 0, Math.PI*2); ctx.fill();
+
+  // Kicker
+  ctx.fillStyle = '#8a7547';
+  ctx.font = '500 22px Inter, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '6px';
+  wrapText(ctx, 'THE REAL GURU', W/2, 210, W-160, 28);
+
+  // Main quote
+  ctx.fillStyle = '#f4f1ea';
+  ctx.font = 'italic 300 60px Fraunces, Georgia, serif';
+  const lines = wrapText(ctx, `"${r.quote || r.mirror}"`, W/2, H/2 - 80, W-160, 78, true);
+
+  // Footer
+  ctx.fillStyle = '#554f47';
+  ctx.font = '400 20px Inter, sans-serif';
+  ctx.fillText('real gurus don\'t charge money', W/2, H - 120);
+
+  canvas.toBlob(async (blob) => {
+    if (!blob) return;
+    const file = new File([blob], 'real-guru.png', {type:'image/png'});
+    if (navigator.canShare && navigator.canShare({files:[file]})){
+      try { await navigator.share({files:[file], title:'The Real Guru'}); return; } catch(e){}
+    }
+    // Fallback: download
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'real-guru.png'; a.click();
+    URL.revokeObjectURL(url);
+    toast('Card saved');
+  }, 'image/png');
+}
+
+function wrapText(ctx, text, x, y, maxWidth, lineHeight, draw = true){
+  const words = text.split(' ');
+  const lines = [];
+  let line = '';
+  for (const w of words){
+    const test = line ? line + ' ' + w : w;
+    if (ctx.measureText(test).width > maxWidth && line){
+      lines.push(line); line = w;
+    } else { line = test; }
+  }
+  if (line) lines.push(line);
+  if (draw){
+    const startY = y - (lines.length-1) * lineHeight / 2;
+    lines.forEach((ln,i) => ctx.fillText(ln, x, startY + i*lineHeight));
+  }
+  return lines;
+}
+
+/* Accessibility: keyboard focus ring that respects dark bg */
+(function a11y(){
+  const style = document.createElement('style');
+  style.textContent = `:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}`;
+  document.head.appendChild(style);
+})();
+</script>
+
+</body>
+</html>
